@@ -75,7 +75,18 @@ public class TestBase {
 		System.out.println("Driver After instantiation is: "+ driver);
 		log.debug("InitializeWebDrive : " + driver.hashCode());
 		driver.manage().timeouts().pageLoadTimeout(ObjectRepo.reader.getPageLoadTimeOut(), TimeUnit.SECONDS);
-		driver.manage().timeouts().implicitlyWait(ObjectRepo.reader.getImplicitWait(), TimeUnit.SECONDS);
+		//driver.manage().timeouts().implicitlyWait(ObjectRepo.reader.getImplicitWait(), TimeUnit.SECONDS);
+		if(ObjectRepo.reader.getRun().equalsIgnoreCase("jenkins")){
+			System.out.println(ObjectRepo.reader.getRun());
+			String implicitwait=System.getProperty("ImplicitWait");
+			int ImplicitWait=Integer.parseInt(implicitwait);
+			driver.manage().timeouts().implicitlyWait(ImplicitWait, TimeUnit.SECONDS);
+		} else {
+			System.out.println(ObjectRepo.reader.getRun());
+			driver.manage().timeouts().implicitlyWait(ObjectRepo.reader.getImplicitWait(), TimeUnit.SECONDS);
+		}
+	
+
 		driver.manage().window().maximize();
 	}
 	

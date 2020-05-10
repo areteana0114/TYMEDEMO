@@ -39,7 +39,7 @@ public class PropertyFileReader implements ConfigReader{
 	}
 
 	public int getImplicitWait() {
-		return Integer.parseInt(prop.getProperty("ImplcitWait"));
+		return Integer.parseInt(prop.getProperty("ImplicitWait"));
 	}
 
 	public int getExplicitWait() {

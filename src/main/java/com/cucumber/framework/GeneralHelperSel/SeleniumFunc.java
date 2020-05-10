@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -35,6 +36,7 @@ import org.testng.Assert;
 import org.testng.Reporter;
 
 import com.cucumber.framework.CS.CustomerServ;
+import com.cucumber.framework.configreader.ObjectRepo;
 import com.cucumber.framework.helper.Logger.LoggerHelper;
 
 public class SeleniumFunc implements SeleniumFuncLoc {
@@ -44,6 +46,17 @@ public class SeleniumFunc implements SeleniumFuncLoc {
 
 	public SeleniumFunc(WebDriver driver) {
 		this.driver = driver;
+		//driver.manage().timeouts().implicitlyWait(ObjectRepo.reader.getImplicitWait(), TimeUnit.SECONDS);
+				if(ObjectRepo.reader.getRun().equalsIgnoreCase("jenkins")){
+					System.out.println(ObjectRepo.reader.getRun());
+					String implicitwait=System.getProperty("ImplicitWait");
+					int ImplicitWait=Integer.parseInt(implicitwait);
+					driver.manage().timeouts().implicitlyWait(ImplicitWait, TimeUnit.SECONDS);
+				} else {
+					System.out.println(ObjectRepo.reader.getRun());
+					driver.manage().timeouts().implicitlyWait(ObjectRepo.reader.getImplicitWait(), TimeUnit.SECONDS);
+				}
+			
 	}
 
 	public void testSel() {
